@@ -23,6 +23,7 @@ function getLimit(configElement) {
     }
 }
 
+
 // Get the 'text' property of the config element if set or the default.
 function getValueText(configElement) {
     // Check if the element has the 'text' property.
