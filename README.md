@@ -311,7 +311,7 @@ a [gentle notice].
 ## Contributing
 
 Any contributions, suggestions, or bug reports are welcome and greatly
-appreciated. Please open an [issue]or submit a [pull request].
+appreciated. Please open an [issue] or submit a [pull request].
 
 ## ⚖️ License
 
