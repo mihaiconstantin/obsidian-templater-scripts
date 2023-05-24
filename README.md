@@ -171,20 +171,6 @@ the prompt modal.
   and the returned value will be displayed. See the examples on the
   [`tp.system.suggester`] documentation page for more information.
 
-##### `fileToMove`
-
-The filed created by the invocation of the `Templater: Create new note from
-template` command. This argument is *required* and must be set from the context
-of the template to the following:
-
-```js
-tp.file.path(true)
-```
-
-This way, the `tp.user.createNoteWithPrompting` script is aware of the new note
-created by the `Templater: Create new note from template` command and can move
-it to the specified location regardless of where it was created.
-
 ##### `ext`
 
 The extension of the template file. This argument is *optional* and set to `.md`
@@ -239,7 +225,7 @@ let config = {
 }
 
 // Create the note.
-await tp.user.createNoteWithPrompting(tp, config, tp.file.path(true))
+await tp.user.createNoteWithPrompting(tp, config)
 -%>
 # <% config.filename.value %>
 
@@ -295,7 +281,7 @@ with
 // Proceed with the note creation gracefully.
 try {
     // Create the note.
-    await tp.user.createNoteWithPrompting(tp, config, tp.file.path(true))
+    await tp.user.createNoteWithPrompting(tp, config)
 
     // Let the user know if the creation succeeded.
     new Notice(`Created note '${config.filename.value}'.`)
@@ -309,7 +295,7 @@ try {
 ```
 
 This will result in any errors (e.g., failure if the note already exists or the
-user cancels the prompt) being caught and displayed in the `Obsidian` interface 
+user cancels the prompt) being caught and displayed in the `Obsidian` interface
 as [gentle notices].
 
 ## Contributing
