@@ -274,6 +274,10 @@ Line two
 
 ```
 
+The following vide shows the above example in action:
+
+https://github.com/mihaiconstantin/obsidian-templater-scripts/assets/20051042/765d864f-7d94-4d73-ab6a-9db5beb49d6c
+
 *Note.* The location where the `Movie Template` template note is stored must be
 registered in the [`Templater`] settings. Please check the [`Templater`]
 documentation for how to do this.
