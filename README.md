@@ -43,7 +43,7 @@ to manually initialize the submodule by executing the following command:
 git submodule update --init --recursive
 ```
 
-### For manual way 👀
+### The manual way 👀
 
 Download a `.zip` archive of this repository, unpack it, and copy the contents
 of the unpacked folder to a location of your choice in the [`Obsidian`] vault
