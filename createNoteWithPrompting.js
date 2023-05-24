@@ -139,7 +139,7 @@ async function elicitPromptAnswers(tp, config) {
  *
  * @throws {Error} - Throws an error for various reasons. Error handling in the template is recommended.
 */
-async function createNoteWithPrompting(tp, config, fileToMove, ext = ".md") {
+async function createNoteWithPrompting(tp, config, ext = ".md") {
     // Validate the config object.
     validateConfig(config)
 
@@ -158,7 +158,7 @@ async function createNoteWithPrompting(tp, config, fileToMove, ext = ".md") {
     }
 
     // Get a file object for the temporary note created.
-    const file = await tp.file.find_tfile(fileToMove)
+    const file = await tp.file.find_tfile(tp.file.path(true))
 
     // Move the note to the desired location.
     await tp.file.move(`${config.path.value}/${config.filename.value}`, file)
