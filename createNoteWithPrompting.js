@@ -127,7 +127,18 @@ async function elicitPromptAnswers(tp, config) {
 }
 
 
-// Create a note if it doesn't exist.
+/**
+ * Create a new note from template with automatic prompting.
+ *
+ * @param {object} tp - The `Templater` object.
+ * @param {object} config - A configuration object containing objects used in the template.
+ * @param {string} fileToMove - The newly created file that needs to be renamed and moved accordingly.
+ * @param {string} ext - The file extension. Defaults to `.md`.
+ *
+ * @returns {Promise<void>} - A promise that resolves when the note is created.
+ *
+ * @throws {Error} - Throws an error for various reasons. Error handling in the template is recommended.
+*/
 async function createNoteWithPrompting(tp, config, fileToMove, ext = ".md") {
     // Validate the config object.
     validateConfig(config)
