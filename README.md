@@ -229,7 +229,7 @@ let config = {
         text: ["Without a doubt, yes!", "I mean... it was okay, but..."]
     },
 
-    // Whether the movie is re-watchable.
+    // A general impression about the movie.
     impression: {
         prompt: true,
         display: "What is my impression about this movie?",
@@ -274,7 +274,7 @@ Line two
 
 ```
 
-The following vide shows the above example in action:
+The following video shows the above example in action:
 
 https://github.com/mihaiconstantin/obsidian-templater-scripts/assets/20051042/765d864f-7d94-4d73-ab6a-9db5beb49d6c
 
@@ -309,8 +309,8 @@ try {
 ```
 
 This will result in any errors (e.g., failure if the note already exists or the
-user cancels the prompt) being caught and displayed in the `Obsidian` interface
-a [gentle notice].
+user cancels the prompt) being caught and displayed in the `Obsidian` interface 
+as [gentle notices].
 
 ## Contributing
 
