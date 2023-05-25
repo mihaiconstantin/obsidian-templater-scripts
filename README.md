@@ -61,7 +61,7 @@ to indicate in the [`Templater`] settings where the `Scripts` folder is located,
 as shown below:
 
 <p align="center">
-    <img width="95%" src="assets/register-scripts-folder.png" alt="register scripts folder"/>
+    <img width="95%" src="docs/assets/register-scripts-folder.png" alt="register scripts folder"/>
 </p>
 
 Additionally, you may also want to exclude this folder from the search results.
@@ -69,7 +69,7 @@ To do this, you need to add the `Scripts` folder to the list of excluded folders
 in the [`Obsidian`] settings, as shown below:
 
 <p align="center">
-    <img width="95%" src="assets/exclude-scripts-folder.png" alt="exclude scripts folder"/>
+    <img width="95%" src="docs/assets/exclude-scripts-folder.png" alt="exclude scripts folder"/>
 </p>
 
 At this point, you are ready to start using the scripts in this repository in
@@ -85,7 +85,7 @@ information and examples on how to use them.
 
 | Script                            | Description                                                                       |               Documentation               |
 | :-------------------------------- | :-------------------------------------------------------------------------------- | :---------------------------------------: |
-| `tp.user.createNoteWithPrompting` | Create a new note from template in a specified location with automated prompting. | [docs link](./docs/createNoteWithPrompting.md) |
+| `tp.user.createNoteWithPrompting` | Create a new note from template in a specified location with automated prompting. | [docs link](docs/createNoteWithPrompting.md) |
 
 
 ## Contributing
