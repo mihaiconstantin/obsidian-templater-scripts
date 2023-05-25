@@ -240,10 +240,10 @@ try {
 
 This will result in any errors (e.g., failure if the note already exists or if
 the user cancels the prompt) being caught and displayed in the [`Obsidian`]
-interface as [gentle notices].
+interface as [gentle notices][notice].
 
 [`Templater`]: https://silentvoid13.github.io/Templater/introduction.html
 [`Obsidian`]: https://obsidian.md/
 [`tp.system.prompt`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
 [`tp.system.suggester`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
-[gentle notice]: https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts#L2547
+[notice]: https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts#L2547

@@ -75,7 +75,7 @@ in the [`Obsidian`] settings, as shown below:
 At this point, you are ready to start using the scripts in this repository in
 your templates.
 
-## 🚀 Usage
+## 🚀 Features
 
 This repository exposes several scripts to the [`Templater`] `tp` object. Each
 of the scripts are available as a property of the `tp.user` object in the
