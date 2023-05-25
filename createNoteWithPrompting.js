@@ -1,6 +1,12 @@
 
 // Get the reference from the config element value if it exists.
 function getReference(configElementValue) {
+    // If not string.
+    if (typeof configElementValue !== "string") {
+        // Return undefined.
+        return undefined
+    }
+
     // Define the pattern.
     const referencePattern = /{{\s*(.*?)\s*}}/
 
