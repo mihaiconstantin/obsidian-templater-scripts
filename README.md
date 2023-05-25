@@ -80,11 +80,11 @@ your templates.
 This repository exposes several scripts to the [`Templater`] `tp` object. Each
 of the scripts are available as a property of the `tp.user` object in the
 context of a template. Below you can see a table with the available scripts and
-a brief description. Check out the documentation for each script (i.e., via the link) for more
-information and examples on how to use them.
+a brief description. Check out the documentation for each script (i.e., via the
+link) for more information and examples on how to use them.
 
-| Script                            | Description                                                                       |
-| :-------------------------------- | :-------------------------------------------------------------------------------- |
+| Script                                                                 | Description                                                                       |
+| :--------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
 | [🔗 `tp.user.createNoteWithPrompting`](docs/createNoteWithPrompting.md) | Create a new note from template in a specified location with automated prompting. |
 
 
