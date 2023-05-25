@@ -209,7 +209,7 @@ Line two
 
 The following video shows the above example in action:
 
-https://github.com/mihaiconstantin/obsidian-templater-scripts/assets/20051042/765d864f-7d94-4d73-ab6a-9db5beb49d6c
+https://github.com/mihaiconstantin/obsidian-templater-scripts/assets/20051042/7977b870-80f7-4582-b1cf-b8cbbd9a5e95
 
 It is advisable that you consider replacing the lines
 
