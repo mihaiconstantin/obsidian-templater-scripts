@@ -87,7 +87,6 @@ link) for more information and examples on how to use them.
 | :----------------------------------------------------------- | :-------------------------------------------------------------------------------- |
 | [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) | Create a new note from template in a specified location with automated prompting. |
 
-
 ## Contributing
 
 Any contributions, suggestions, or bug reports are welcome and greatly
