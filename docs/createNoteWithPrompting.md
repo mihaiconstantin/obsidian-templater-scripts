@@ -143,7 +143,7 @@ let config = {
     title: {
         prompt: true,
         display: "What is the tile of the movie?",
-        value: "🎥 {{ filename }}",
+        value: "{{ filename }}"
     },
 
     // The genre of the movie.
@@ -174,7 +174,7 @@ let config = {
 await tp.user.createNoteWithPrompting(tp, config)
 _%>
 
-# <% config.title.value %>
+# 🎥 <% config.title.value %>
 
 ## Description
 
@@ -210,7 +210,6 @@ Line two
 The following video shows the above example in action:
 
 https://github.com/mihaiconstantin/obsidian-templater-scripts/assets/20051042/765d864f-7d94-4d73-ab6a-9db5beb49d6c
-
 
 It is advisable that you consider replacing the lines
 
