@@ -1,3 +1,23 @@
+
+// Get the reference from the config element value if it exists.
+function getReference(configElementValue) {
+    // Define the pattern.
+    const referencePattern = /{{\s*(.*?)\s*}}/
+
+    // Perform the match.
+    const match = configElementValue.match(referencePattern)
+
+    // Check if the match is not null.
+    if (match != null) {
+        // Return the first capturing group.
+        return match[1]
+    }
+
+    // Otherwise return undefined.
+    return undefined
+}
+
+
 // Get the 'multiline' property of the config element if set or the default.
 function getMultiLine(configElement) {
     // Check if the element has the 'multiline' property.
@@ -75,49 +95,107 @@ function validateConfig(config) {
 }
 
 
+// Issue the correct prompt baaed on value type.
+async function issuePrompt(tp, configElement) {
+    // Define the value.
+    let value;
+
+    // If the config element is an array.
+    if (Array.isArray(configElement.value)) {
+        // Show the user a list of options to choose from.
+        value = await tp.system.suggester(
+            // The text representation of the items.
+            getValueText(configElement),
+
+            // The actual item values.
+            configElement.value,
+
+            // Throw on cancel.
+            true,
+
+            // The placeholder text.
+            configElement.display,
+
+            // Whether or not there is a limit.
+            getLimit(configElement)
+        )
+    } else {
+        // Prompt the user for the value in text form.
+        value = await tp.system.prompt(
+            // The prompt message.
+            configElement.display,
+
+            // The default, prefilled value.
+            configElement.value,
+
+            // Throw on cancel.
+            true,
+
+            // Whether or not the prompt is multiline.
+            getMultiLine(configElement)
+        )
+    }
+
+    // Return the value.
+    return value
+}
+
+
+// Sort references array to ensure logical ordering of the prompts.
+function sortReferences(references) {
+    // Sort and return.
+    return references.sort((a, b) => {
+        if (a.reference == b.key) {
+            return 1
+        } else if (b.reference == a.key) {
+            return -1
+        } else {
+            return 0
+        }
+    })
+}
+
+
 // Elicit answers from the user for the prompts.
 async function elicitPromptAnswers(tp, config) {
+    // Configs that have references.
+    let references = []
+
     // Attempt to adjust the reference template config values.
     try {
         // For each config object in the template config.
         for (const key in config) {
+            // Attempt to get the reference.
+            const reference = getReference(config[key].value)
+
+            // If the config element value has a reference.
+            if (reference != null) {
+                // Add the config key and reference the references array.
+                references.push({ key, reference })
+
+                // For now continue with the prompts.
+                continue
+            }
+
             // If the config element requires a prompt.
             if (config[key].prompt) {
-                // If the config element is an array.
-                if (Array.isArray(config[key].value)) {
-                    // Show the user a list of options to choose from.
-                    config[key].value = await tp.system.suggester(
-                        // The text representation of the items.
-                        getValueText(config[key]),
+                // Update the config element value based on the prompt.
+                config[key].value = await issuePrompt(tp, config[key])
+            }
+        }
 
-                        // The actual item values.
-                        config[key].value,
+        // Sort the references to respect reference dependency.
+        references = sortReferences(references)
 
-                        // Throw on cancel.
-                        true,
+        // For each object that had a reference.
+        for (let i = 0; i < references.length; i++) {
+            // Set the config element value to the reference value.
+            config[references[i].key].value = config[references[i].reference].value
 
-                        // The placeholder text.
-                        config[key].display,
-
-                        // Whether or not there is a limit.
-                        getLimit(config[key])
-                    )
-                } else {
-                    // Prompt the user for the value in text form.
-                    config[key].value = await tp.system.prompt(
-                        // The prompt message.
-                        config[key].display,
-
-                        // The default, prefilled value.
-                        config[key].value,
-
-                        // Throw on cancel.
-                        true,
-
-                        // Whether or not the prompt is multiline.
-                        getMultiLine(config[key])
-                    )
-                }
+            // If the value that referenced also requires prompting.
+            if (config[references[i].key].prompt) {
+                // Prompt the user to modify the referenced value.
+                config[references[i].key].value = await issuePrompt(tp, config[references[i].key])
             }
         }
     } catch (error) {
