@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0
+
+### Added
+
+- Extend referencing functionality to allow mixing the `{{` and `}}` syntax with
+  regular text. For example, in the configuration `before {{ filename }} after`,
+  the `{{ filename }}` part will be replaced in place and the `before` and
+  `after` strings will be maintained.
+
 ## 1.0.0
 
 ### Added
