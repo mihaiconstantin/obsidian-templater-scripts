@@ -237,8 +237,8 @@ try {
 }
 ```
 
-This will result in any errors (e.g., failure if the note already exists or if
-the user cancels the prompt) being caught and displayed in the [`Obsidian`]
+This will allow errors (e.g., failure if the note already exists or if
+the user cancels the prompt) to be caught and displayed in the [`Obsidian`]
 interface as [gentle notices][notice].
 
 [`Templater`]: https://silentvoid13.github.io/Templater/introduction.html
