@@ -85,7 +85,7 @@ information and examples on how to use them.
 
 | Script                            | Description                                                                       |               Documentation               |
 | :-------------------------------- | :-------------------------------------------------------------------------------- | :---------------------------------------: |
-| `tp.user.createNoteWithPrompting` | Create a new note from template in a specified location with automated prompting. | [docs link](docs/createNoteWithPrompting.md) |
+| [`tp.user.createNoteWithPrompting`](docs/createNoteWithPrompting.md) | Create a new note from template in a specified location with automated prompting. | [docs link](docs/createNoteWithPrompting.md) |
 
 
 ## Contributing
