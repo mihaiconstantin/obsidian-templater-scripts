@@ -1,4 +1,6 @@
-# 🚀 [`createNoteWithPrompting`]
+# `Templater` User Scripts for `Obsidian`
+
+## 🚀 [`createNoteWithPrompting`]
 
 This script creates a new note from a given template in a specified location and
 prompts the user for the relevant note creation and template variable. It also
