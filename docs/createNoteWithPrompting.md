@@ -1,4 +1,9 @@
-# `Templater` User Scripts for `Obsidian`
+<h1 align="center">
+    <a href="https://obsidian-scripts.mihaiconstantin.com/">
+        <code>Templater</code> User Scripts </br>
+        for <code>Obsidian</code>
+    </a>
+</h1>
 
 ## 🚀 [`createNoteWithPrompting`]
 
