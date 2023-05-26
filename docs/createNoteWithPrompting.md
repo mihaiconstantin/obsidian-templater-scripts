@@ -42,7 +42,8 @@ following required properties:
     value: string | string[],
     multiple: boolean,
     limit: number,
-    text: string[] | (item: any) => string
+    text: string[] | (item: any) => string,
+    check: (value: string) => boolean
 }
 ```
 
@@ -105,7 +106,6 @@ properties can also be used:
   maximum number of suggestions that should be displayed by the
   [`tp.system.suggester`]. If this property is not set, the default behavior of
   the [`tp.system.suggester`] will be used.
-
 - **`text`**: used when the `value` property is set to an array to indicate the
   corresponding text that should be displayed in the user interface for each
   suggestion (i.e., array element in `value`). This property can be set to an
@@ -118,6 +118,14 @@ properties can also be used:
       will be called with a single argument, which is the corresponding element
       in `value`. The function should return a string. See the examples on the
       [`tp.system.suggester`] documentation page for more information.
+- **`check`**: used to check whether the `value` property is valid according to
+  some custom criteria. This property must be a function that takes a single
+  argument (i.e., the `value` of the config element) and returns a boolean. If
+  the function returns `true`, the `value` property is considered valid. If the
+  function returns `false`, the `value` property is considered invalid and an
+  error is thrown. If the `check` property is used in conjunction with `prompt:
+  true`, the check is performed after the prompt modal is submitted. See the
+  [Examples](#examples) section for more information.
 
 ### `ext`
 
@@ -165,7 +173,8 @@ let config = {
     genre: {
         prompt: true,
         display: "What is the movie genre?",
-        value: ["comedy", "thriller", "other"]
+        value: ["comedy", "thriller", "other"],
+        check: (value) => value === "thriller" ? false : true
     },
 
     // Whether the movie is re-watchable.
@@ -256,6 +265,15 @@ try {
 This will allow errors (e.g., failure if the note already exists or if
 the user cancels the prompt) to be caught and displayed in the [`Obsidian`]
 interface as [gentle notices][notice].
+
+### Value Checking
+
+In the example template above, the `genre` config element has a `check` property
+set to a function. This function executes after the prompt modal is submitted
+and checks, in this case, whether the `value` property is equal to `"thriller"`.
+If it is, the function returns `false` indicating that the value is invalid and
+an error is thrown. If the error is caught as discussed above, it will be
+displayed in the [`Obsidian`] interface as a [notice].
 
 [`Templater`]: https://silentvoid13.github.io/Templater/introduction.html
 [`Obsidian`]: https://obsidian.md/

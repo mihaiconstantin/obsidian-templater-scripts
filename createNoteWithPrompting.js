@@ -63,6 +63,28 @@ function getValueText(configElement) {
 }
 
 
+// Perform custom user checks on the config element values.
+function checkConfigElementValue(config, key) {
+    // If the value has a custom user check.
+    if (config[key].hasOwnProperty("check")) {
+        // If the check is not a function.
+        if (typeof config[key].check !== "function") {
+            // Throw.
+            throw new Error("The 'check' property must be a function.")
+        }
+
+        // Check the value.
+        const checkResult = config[key].check(config[key].value)
+
+        // If the check failed.
+        if (!checkResult) {
+            // Throw.
+            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
+        }
+    }
+}
+
+
 // Validate the config object since we can not use types.
 function validateConfig(config) {
     // Ensure the config has the required properties.
@@ -187,6 +209,9 @@ async function elicitPromptAnswers(tp, config) {
             if (config[key].prompt) {
                 // Update the config element value based on the prompt.
                 config[key].value = await issuePrompt(tp, config[key])
+
+                // Check the value if the config has a custom user check.
+                checkConfigElementValue(config, key)
             }
         }
 
@@ -197,7 +222,8 @@ async function elicitPromptAnswers(tp, config) {
         for (let i = 0; i < references.length; i++) {
             // Replace the config element reference placeholder with the reference value.
             config[references[i].key].value = config[references[i].key].value.replace(
-                /{{.*}}/g, config[references[i].reference].value
+                /{{.*}}/g,
+                config[references[i].reference].value
             )
 
             // If the value that referenced also requires prompting.
@@ -205,10 +231,22 @@ async function elicitPromptAnswers(tp, config) {
                 // Prompt the user to modify the referenced value.
                 config[references[i].key].value = await issuePrompt(tp, config[references[i].key])
             }
+
+            // Check the value if the config has a custom user check.
+            checkConfigElementValue(config, references[i].key)
         }
     } catch (error) {
-        // Throw on canceling the prompt.
-        throw new Error('Note creation canceled.')
+        // Set the default message to note creation cancelation.
+        let message = "Note creation canceled."
+
+        // Decide on the error message.
+        if (error != null) {
+            // Set the error message.
+            message = error.message
+        }
+
+        // Throw.
+        throw new Error(message)
     }
 }
 
