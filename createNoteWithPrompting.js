@@ -63,6 +63,28 @@ function getValueText(configElement) {
 }
 
 
+// Perform custom user checks on the config element values.
+function checkConfigElementValue(config, key) {
+    // If the value has a custom user check.
+    if (config[key].hasOwnProperty("check")) {
+        // If the check is not a function.
+        if (typeof config[key].check !== "function") {
+            // Throw.
+            throw new Error("The 'check' property must be a function.")
+        }
+
+        // Check the value.
+        const checkResult = config[key].check(config[key].value)
+
+        // If the check failed.
+        if (!checkResult) {
+            // Throw.
+            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
+        }
+    }
+}
+
+
 // Validate the config object since we can not use types.
 function validateConfig(config) {
     // Ensure the config has the required properties.
@@ -159,22 +181,6 @@ function sortReferences(references) {
             return 0
         }
     })
-}
-
-
-// Perform custom user checks on the config element values.
-function checkConfigElementValue(config, key) {
-    // If the value has a custom user check.
-    if (config[key].hasOwnProperty("check")) {
-        // Check the value.
-        const checkResult = config[key].check(config[key].value)
-
-        // If the check failed.
-        if (!checkResult) {
-            // Throw.
-            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
-        }
-    }
 }
 
 
