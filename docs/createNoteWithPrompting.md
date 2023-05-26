@@ -124,6 +124,12 @@ properties can also be used:
 The extension of the resulting note file. This argument is *optional* and set to
 `.md` by default.
 
+## Value
+
+The `createNoteWithPrompting` function call returns a promise that resolves to
+the [`TFile`] representation of the newly created note. In case of errors or
+user cancelling the prompting process, the promise will resolve to `undefined`.
+
 ## Examples
 
 The following example shows how to use the `tp.user.createNoteWithPrompting`.
@@ -255,5 +261,6 @@ interface as [gentle notices][notice].
 [`Obsidian`]: https://obsidian.md/
 [`tp.system.prompt`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
 [`tp.system.suggester`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
-[notice]: https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts#L2547
+[`TFile`]: https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L3616
+[notice]: https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L2547
 [`createNoteWithPrompting`]: https://github.com/mihaiconstantin/obsidian-templater-scripts/blob/main/createNoteWithPrompting.js

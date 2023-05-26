@@ -221,7 +221,7 @@ async function elicitPromptAnswers(tp, config) {
  * @param {string} fileToMove - The newly created file that needs to be renamed and moved accordingly.
  * @param {string} ext - The file extension. Defaults to `.md`.
  *
- * @returns {Promise<void>} - A promise that resolves when the note is created.
+ * @returns {Promise<TFile>} - A promise that resolves to the newly created note `TFile` object.
  *
  * @throws {Error} - Throws an error for various reasons. Error handling in the template is recommended.
 */
@@ -248,6 +248,9 @@ async function createNoteWithPrompting(tp, config, ext = ".md") {
 
     // Move the note to the desired location.
     await tp.file.move(`${config.path.value}/${config.filename.value}`, file)
+
+    // Return the file object.
+    return(file)
 }
 
 

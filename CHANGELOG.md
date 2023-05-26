@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.3.0
+
+### Added
+
+- Update [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user
+  script to return the
+  [`TFile`](https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L3616)
+  object of the newly created note. This can be handy for further processing of
+  the note in the script.
+
 ## 1.2.0
 
 ### Added
