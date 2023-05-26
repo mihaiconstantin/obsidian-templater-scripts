@@ -1,8 +1,6 @@
 <h1 align="center">
-    <a href="https://obsidian-scripts.mihaiconstantin.com/">
-        <code>Templater</code> User Scripts </br>
-        for <code>Obsidian</code>
-    </a>
+    <code>Templater</code> User Scripts <br/>
+    for <code>Obsidian</code>
 </h1>
 
 ## ℹ️ Description
