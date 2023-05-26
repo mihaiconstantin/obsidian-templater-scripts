@@ -1,3 +1,40 @@
+// Validate the config object since we can not use types.
+function validateConfig(config) {
+    // Ensure the config has the required properties.
+    if (!config.hasOwnProperty("path")) {
+        // Throw.
+        throw new Error("Missing required 'path' config.")
+    }
+
+    // Ensure the config has the required properties.
+    if (!config.hasOwnProperty("filename")) {
+        // Throw.
+        throw new Error("Missing required 'filename' config.")
+
+    }
+
+    // Ensure that each object on the config has the three required properties.
+    for (const key in config) {
+        // Ensure the config has the required properties.
+        if (!config[key].hasOwnProperty("prompt")) {
+            // Throw.
+            throw new Error(`Missing required 'prompt' property for '${key}' config.`)
+        }
+
+        // Ensure the config has the required properties.
+        if (!config[key].hasOwnProperty("display")) {
+            // Throw.
+            throw new Error(`Missing required 'display' property for '${key}' config.`)
+        }
+
+        // Ensure the config has the required properties.
+        if (!config[key].hasOwnProperty("value")) {
+            // Throw.
+            throw new Error(`Missing required 'value' property for '${key}' config.`)
+        }
+    }
+}
+
 
 // Get the reference from the config element value if it exists.
 function getReference(configElementValue) {
@@ -98,44 +135,6 @@ function checkConfigElementValue(config, key) {
         if (!checkResult) {
             // Throw.
             throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
-        }
-    }
-}
-
-
-// Validate the config object since we can not use types.
-function validateConfig(config) {
-    // Ensure the config has the required properties.
-    if (!config.hasOwnProperty("path")) {
-        // Throw.
-        throw new Error("Missing required 'path' config.")
-    }
-
-    // Ensure the config has the required properties.
-    if (!config.hasOwnProperty("filename")) {
-        // Throw.
-        throw new Error("Missing required 'filename' config.")
-
-    }
-
-    // Ensure that each object on the config has the three required properties.
-    for (const key in config) {
-        // Ensure the config has the required properties.
-        if (!config[key].hasOwnProperty("prompt")) {
-            // Throw.
-            throw new Error(`Missing required 'prompt' property for '${key}' config.`)
-        }
-
-        // Ensure the config has the required properties.
-        if (!config[key].hasOwnProperty("display")) {
-            // Throw.
-            throw new Error(`Missing required 'display' property for '${key}' config.`)
-        }
-
-        // Ensure the config has the required properties.
-        if (!config[key].hasOwnProperty("value")) {
-            // Throw.
-            throw new Error(`Missing required 'value' property for '${key}' config.`)
         }
     }
 }
