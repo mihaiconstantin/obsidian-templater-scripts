@@ -8,6 +8,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Update `_config.yml` to remove default repository name `<h1/>` heading in
+  favor of custom heading.
 - Enable `GitHub` pages and add `Jeykll` configuration file.
 
 ## 1.1.0
