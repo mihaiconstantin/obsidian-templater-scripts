@@ -1,4 +1,4 @@
-# `createNoteWithPrompting`
+# [`createNoteWithPrompting`]
 
 This script creates a new note from a given template in a specified location and
 prompts the user for the relevant note creation and template variable. It also
@@ -247,3 +247,4 @@ interface as [gentle notices][notice].
 [`tp.system.prompt`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
 [`tp.system.suggester`]: https://silentvoid13.github.io/Templater/internal-functions/internal-modules/system-module.html
 [notice]: https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts#L2547
+[`createNoteWithPrompting`]: https://github.com/mihaiconstantin/obsidian-templater-scripts/blob/main/createNoteWithPrompting.js
