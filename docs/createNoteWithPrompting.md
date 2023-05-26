@@ -1,7 +1,9 @@
-<h1 align="center">
+<h1 align="center" style="line-height: 2">
+    <code>Templater</code> User Scripts <br>
+    for <code>Obsidian</code>
+    <br/>
     <a href="https://obsidian-scripts.mihaiconstantin.com/">
-        <code>Templater</code> User Scripts </br>
-        for <code>Obsidian</code>
+        🏠 Page
     </a>
 </h1>
 
