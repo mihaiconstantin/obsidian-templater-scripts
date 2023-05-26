@@ -162,6 +162,22 @@ function sortReferences(references) {
 }
 
 
+// Perform custom user checks on the config element values.
+function checkConfigElementValue(configElement) {
+    // If the value has a custom user check.
+    if (configElement.hasOwnProperty("check")) {
+        // Check the value.
+        const checkResult = configElement.check(configElement.value)
+
+        // If the check failed.
+        if (!checkResult) {
+            // Throw.
+            throw new Error(`Invalid value '${configElement.value}' for '${key}' config.`)
+        }
+    }
+}
+
+
 // Elicit answers from the user for the prompts.
 async function elicitPromptAnswers(tp, config) {
     // Configs that have references.
@@ -187,6 +203,9 @@ async function elicitPromptAnswers(tp, config) {
             if (config[key].prompt) {
                 // Update the config element value based on the prompt.
                 config[key].value = await issuePrompt(tp, config[key])
+
+                // Check the value if the config has a custom user check.
+                checkConfigElementValue(config[key])
             }
         }
 
@@ -197,7 +216,8 @@ async function elicitPromptAnswers(tp, config) {
         for (let i = 0; i < references.length; i++) {
             // Replace the config element reference placeholder with the reference value.
             config[references[i].key].value = config[references[i].key].value.replace(
-                /{{.*}}/g, config[references[i].reference].value
+                /{{.*}}/g,
+                config[references[i].reference].value
             )
 
             // If the value that referenced also requires prompting.
@@ -205,6 +225,9 @@ async function elicitPromptAnswers(tp, config) {
                 // Prompt the user to modify the referenced value.
                 config[references[i].key].value = await issuePrompt(tp, config[references[i].key])
             }
+
+            // Check the value if the config has a custom user check.
+            checkConfigElementValue(config[references[i].key])
         }
     } catch (error) {
         // Throw on canceling the prompt.
