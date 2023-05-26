@@ -209,7 +209,7 @@ Line two
 
 The following video shows the above example in action:
 
-<video src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" controls="controls" muted="muted">
+<video src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" controls="controls" muted="muted" style="max-width:100%">
 </video>
 
 It is advisable that you consider replacing the lines
