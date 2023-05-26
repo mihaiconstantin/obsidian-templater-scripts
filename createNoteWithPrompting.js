@@ -66,8 +66,8 @@ function getLimit(configElement) {
 function getValueText(configElement) {
     // Check if the element has the 'text' property.
     if (configElement.hasOwnProperty("text")) {
-        // If the `text` property is not an array or function.
-        if (!Array.isArray(configElement.text) || typeof configElement.text !== "function") {
+        // If the `text` property is not an array and not a function.
+        if (!Array.isArray(configElement.text) && typeof configElement.text !== "function") {
             // Throw.
             throw new Error("The 'text' property must be an array or function.")
         }
