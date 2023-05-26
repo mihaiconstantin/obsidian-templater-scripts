@@ -163,16 +163,16 @@ function sortReferences(references) {
 
 
 // Perform custom user checks on the config element values.
-function checkConfigElementValue(configElement) {
+function checkConfigElementValue(config, key) {
     // If the value has a custom user check.
-    if (configElement.hasOwnProperty("check")) {
+    if (config[key].hasOwnProperty("check")) {
         // Check the value.
-        const checkResult = configElement.check(configElement.value)
+        const checkResult = config[key].check(config[key].value)
 
         // If the check failed.
         if (!checkResult) {
             // Throw.
-            throw new Error(`Invalid value '${configElement.value}' for '${key}' config.`)
+            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
         }
     }
 }
@@ -205,7 +205,7 @@ async function elicitPromptAnswers(tp, config) {
                 config[key].value = await issuePrompt(tp, config[key])
 
                 // Check the value if the config has a custom user check.
-                checkConfigElementValue(config[key])
+                checkConfigElementValue(config, key)
             }
         }
 
@@ -227,7 +227,7 @@ async function elicitPromptAnswers(tp, config) {
             }
 
             // Check the value if the config has a custom user check.
-            checkConfigElementValue(config[references[i].key])
+            checkConfigElementValue(config, references[i].key)
         }
     } catch (error) {
         // Throw on canceling the prompt.
