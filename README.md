@@ -1,5 +1,5 @@
-<h1 align="center">
-    <code>Templater</code> User Scripts <br/>
+<h1 align="center" style="line-height: 2">
+    <code>Templater</code> User Scripts <br>
     for <code>Obsidian</code>
 </h1>
 
