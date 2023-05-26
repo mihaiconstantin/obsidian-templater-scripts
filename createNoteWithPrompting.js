@@ -230,8 +230,17 @@ async function elicitPromptAnswers(tp, config) {
             checkConfigElementValue(config, references[i].key)
         }
     } catch (error) {
-        // Throw on canceling the prompt.
-        throw new Error('Note creation canceled.')
+        // Set the default message to note creation cancelation.
+        let message = "Note creation canceled."
+
+        // Decide on the error message.
+        if (error != null) {
+            // Set the error message.
+            message = error.message
+        }
+
+        // Throw.
+        throw new Error(message)
     }
 }
 
