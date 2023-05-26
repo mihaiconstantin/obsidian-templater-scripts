@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.4.0
+
+### Added
+
+- Added support for custom checks via the `check` property in config elements.
+  This property allows specifying a function that is executed after the prompt
+  is submitted to validate the user's input (i.e., the contents of the `value`
+  property). An error is thrown if the function returns `false`. This can be
+  useful for enforcing constraints on the prompt input, such as requiring a
+  certain format or disallowing certain values.
+
 ## 1.3.0
 
 ### Added
