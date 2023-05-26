@@ -43,7 +43,7 @@ following required properties:
     multiple: boolean,
     limit: number,
     text: string[] | (item: any) => string,
-    check: (value: string | string[]) => boolean
+    check: (value: string) => boolean
 }
 ```
 
