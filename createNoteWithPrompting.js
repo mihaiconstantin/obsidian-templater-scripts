@@ -140,6 +140,31 @@ function checkConfigElementValue(config, key) {
 }
 
 
+// Perform customer user processing on the config element values.
+async function processConfigElementValue(config, key) {
+    // If the value has a custom user process.
+    if (config[key].hasOwnProperty("process")) {
+        // If the process is not a function.
+        if (typeof config[key].process !== "function") {
+            // Reject `Promise` with error.
+            return Promise.reject(new Error("The 'process' property must be a function."))
+        }
+
+        // Attempt to resolve a promise.
+        try {
+            // Return the processed value from the resolved promise.
+            return await new Promise(resolve => {
+                // Resolve the promise with the processed value.
+                resolve(config[key].process(config[key].value))
+            })
+        } catch (error) {
+            // Reject promise with error.
+            return Promise.reject(error)
+        }
+    }
+}
+
+
 // Issue the correct prompt baaed on value type.
 async function issuePrompt(tp, configElement) {
     // Define the value.
@@ -226,10 +251,13 @@ async function elicitPromptAnswers(tp, config) {
             if (config[key].prompt) {
                 // Update the config element value based on the prompt.
                 config[key].value = await issuePrompt(tp, config[key])
-
-                // Check the value if the config has a custom user check.
-                checkConfigElementValue(config, key)
             }
+
+            // Process the value if the config has a custom user process.
+            config[key].value = await processConfigElementValue(config, key)
+
+            // Check the value if the config has a custom user check.
+            checkConfigElementValue(config, key)
         }
 
         // Sort the references to respect reference dependency.
@@ -248,6 +276,9 @@ async function elicitPromptAnswers(tp, config) {
                 // Prompt the user to modify the referenced value.
                 config[references[i].key].value = await issuePrompt(tp, config[references[i].key])
             }
+
+            // Process the value if the config has a custom user process.
+            config[key].value = await processConfigElementValue(config, references[i].key)
 
             // Check the value if the config has a custom user check.
             checkConfigElementValue(config, references[i].key)
