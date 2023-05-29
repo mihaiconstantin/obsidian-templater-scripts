@@ -168,25 +168,32 @@ async function checkConfigElementValue(config, key) {
 
 
 // Perform customer user processing on the config element values.
-async function processConfigElementValue(config, key) {
+async function processConfigElementValue(tp, config, key) {
     // If the value has a custom user process.
     if (config[key].hasOwnProperty("process")) {
         // If the process is not a function.
         if (typeof config[key].process !== "function") {
-            // Reject `Promise` with error.
-            return Promise.reject(new Error("The 'process' property must be a function."))
+            // Throw.
+            throw new Error(`Property '${key}.process' must be a function.`);
         }
 
-        // Attempt to resolve a promise.
+        // Store the current value.
+        const originalValue = config[key].value;
+
+        // Try to process the value.
         try {
-            // Return the processed value from the resolved promise.
-            return await new Promise(resolve => {
-                // Resolve the promise with the processed value.
-                resolve(config[key].process(config[key].value))
-            })
-        } catch (error) {
-            // Reject promise with error.
-            return Promise.reject(error)
+            // Process and update the value.
+            config[key].value = await Promise.resolve(config[key].process(originalValue));
+
+            // Give the user a chance to modify the result.
+            config[key].value = await issuePrompt(tp, config, key);
+        }
+        catch (error) {
+            // Restore the original value.
+            config[key].value = originalValue;
+
+            // Throw if the processing failed.
+            throw new Error(`Failed processing '${key}' configuration value.`);
         }
     }
 }
@@ -266,7 +273,7 @@ async function elicitPromptAnswers(tp, config) {
             }
 
             // Process the value if the config has a custom user process.
-            config[key].value = await processConfigElementValue(config, key)
+            await processConfigElementValue(tp, config, key);
 
             // Check the value if the config has a custom user check.
             await checkConfigElementValue(config, key);
@@ -290,7 +297,7 @@ async function elicitPromptAnswers(tp, config) {
             }
 
             // Process the value if the config has a custom user process.
-            config[key].value = await processConfigElementValue(config, references[i].key)
+            await processConfigElementValue(tp, config, reference.key);
 
             // Check the value if the config has a custom user check.
             await checkConfigElementValue(config, reference.key);
