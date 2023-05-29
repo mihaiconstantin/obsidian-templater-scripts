@@ -45,23 +45,23 @@ function getReference(configElementValue) {
     // If not string.
     if (typeof configElementValue !== "string") {
         // Return undefined.
-        return undefined
+        return undefined;
     }
 
     // Define the pattern.
-    const referencePattern = /{{\s*(.*?)\s*}}/
+    const referencePattern = /{{\s*(.*?)\s*}}/;
 
     // Perform the match.
-    const match = configElementValue.match(referencePattern)
+    const match = configElementValue.match(referencePattern);
 
     // Check if the match is not null.
     if (match != null) {
         // Return the first capturing group.
-        return match[1]
+        return match[1];
     }
 
     // Otherwise return undefined.
-    return undefined
+    return undefined;
 }
 
 
@@ -129,16 +129,16 @@ function checkConfigElementValue(config, key) {
         // If the check is not a function.
         if (typeof config[key].check !== "function") {
             // Throw.
-            throw new Error("The 'check' property must be a function.")
+            throw new Error("The 'check' property must be a function.");
         }
 
         // Check the value.
-        const checkResult = config[key].check(config[key].value)
+        const checkResult = config[key].check(config[key].value);
 
         // If the check failed.
         if (!checkResult) {
             // Throw.
-            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`)
+            throw new Error(`Invalid value '${config[key].value}' for '${key}' config.`);
         }
     }
 }
@@ -192,7 +192,7 @@ async function issuePrompt(tp, configElement) {
 
             // Whether or not there is a limit.
             getLimit(configElement)
-        )
+        );
     } else {
         // Prompt the user for the value in text form.
         value = await tp.system.prompt(
@@ -207,7 +207,7 @@ async function issuePrompt(tp, configElement) {
 
             // Whether or not the prompt is multiline.
             getMultiLine(configElement)
-        )
+        );
     }
 
     // Return the value.
@@ -233,22 +233,22 @@ function sortReferences(references) {
 // Elicit answers from the user for the prompts.
 async function elicitPromptAnswers(tp, config) {
     // Configs that have references.
-    let references = []
+    let references = [];
 
     // Attempt to adjust the reference template config values.
     try {
         // For each config object in the template config.
         for (const key in config) {
             // Attempt to get the reference.
-            const reference = getReference(config[key].value)
+            const reference = getReference(config[key].value);
 
             // If the config element value has a reference.
             if (reference != null) {
                 // Add the config key and reference the references array.
-                references.push({ key, reference })
+                references.push({ key, reference });
 
                 // For now continue with the prompts.
-                continue
+                continue;
             }
 
             // If the config element requires a prompt.
@@ -265,7 +265,7 @@ async function elicitPromptAnswers(tp, config) {
         }
 
         // Sort the references to respect reference dependency.
-        references = sortReferences(references)
+        references = sortReferences(references);
 
         // For each object that had a reference.
         for (let i = 0; i < references.length; i++) {
@@ -273,12 +273,12 @@ async function elicitPromptAnswers(tp, config) {
             config[references[i].key].value = config[references[i].key].value.replace(
                 /{{.*}}/g,
                 config[references[i].reference].value
-            )
+            );
 
             // If the value that referenced also requires prompting.
             if (config[references[i].key].prompt) {
                 // Prompt the user to modify the referenced value.
-                config[references[i].key].value = await issuePrompt(tp, config[references[i].key])
+                config[references[i].key].value = await issuePrompt(tp, config[references[i].key]);
             }
 
             // Process the value if the config has a custom user process.
@@ -289,16 +289,16 @@ async function elicitPromptAnswers(tp, config) {
         }
     } catch (error) {
         // Set the default message to note creation cancelation.
-        let message = "Note creation canceled."
+        let message = "Note creation canceled.";
 
         // Decide on the error message.
         if (error != null) {
             // Set the error message.
-            message = error.message
+            message = error.message;
         }
 
         // Throw.
-        throw new Error(message)
+        throw new Error(message);
     }
 }
 
@@ -317,33 +317,33 @@ async function elicitPromptAnswers(tp, config) {
 */
 async function createNoteWithPrompting(tp, config, ext = ".md") {
     // Validate the config object.
-    validateRequiredConfigElements(config)
+    validateRequiredConfigElements(config);
 
     // Validate the properties of config elements.
-    validateRequiredConfigElementProperties(config)
+    validateRequiredConfigElementProperties(config);
 
     // Adjust the passed by reference config object based on the user's input.
-    await elicitPromptAnswers(tp, config)
+    await elicitPromptAnswers(tp, config);
 
     // Check if the file exists.
     const fileExists = await tp.file.exists(
         `${config.path.value}/${config.filename.value}${ext}`
-    )
+    );
 
     // If the file exists.
     if (fileExists) {
         // Throw.
-        throw new Error(`Note '${config.filename.value}' already exists.`)
+        throw new Error(`Note '${config.filename.value}' already exists.`);
     }
 
     // Get a file object for the temporary note created.
-    const file = await tp.file.find_tfile(tp.file.path(true))
+    const file = await tp.file.find_tfile(tp.file.path(true));
 
     // Move the note to the desired location.
-    await tp.file.move(`${config.path.value}/${config.filename.value}`, file)
+    await tp.file.move(`${config.path.value}/${config.filename.value}`, file);
 
     // Return the file object.
-    return(file)
+    return file;
 }
 
 
