@@ -66,58 +66,58 @@ function getReference(configElementValue) {
 
 
 // Get the 'multiline' property of the config element if set or the default.
-function getMultiLine(configElement) {
+function getMultiLine(config, key) {
     // Check if the element has the 'multiline' property.
-    if (configElement.hasOwnProperty("multiline")) {
+    if (config[key].hasOwnProperty("multiline")) {
         // If the `multiline` property is not a boolean.
-        if (typeof configElement.multiline !== "boolean") {
+        if (typeof config[key].multiline !== "boolean") {
             // Throw.
-            throw new Error("The 'multiline' property must be a boolean.")
+            throw new Error(`Property '${key}.multiline' must be a boolean.`);
         }
 
         // Return the value of the property.
-        return configElement.multiline
+        return config[key].multiline;
     } else {
         // Return default.
-        return false
+        return false;
     }
 }
 
 
 // Get the 'limit' property of the config element if set or the default.
-function getLimit(configElement) {
+function getLimit(config, key) {
     // Check if the element has the 'limit' property.
-    if (configElement.hasOwnProperty("limit")) {
+    if (config[key].hasOwnProperty("limit")) {
         // If the `limit` property is not a number.
-        if (typeof configElement.limit !== "number") {
+        if (typeof config[key].limit !== "number") {
             // Throw.
-            throw new Error("The 'limit' property must be a number.")
+            throw new Error(`Property '${key}.limit' must be an integer.`);
         }
 
         // Return the value of the property.
-        return configElement.limit
+        return config[key].limit;
     } else {
         // Return default.
-        return undefined
+        return undefined;
     }
 }
 
 
 // Get the 'text' property of the config element if set or the default.
-function getValueText(configElement) {
+function getValueText(config, key) {
     // Check if the element has the 'text' property.
-    if (configElement.hasOwnProperty("text")) {
+    if (config[key].hasOwnProperty("text")) {
         // If the `text` property is not an array and not a function.
-        if (!Array.isArray(configElement.text) && typeof configElement.text !== "function") {
+        if (!Array.isArray(config[key].text) && typeof config[key].text !== "function") {
             // Throw.
-            throw new Error("The 'text' property must be an array or function.")
+            throw new Error(`Property '${key}.text' property must be an array or a function.`);
         }
 
         // Return the value of the property.
-        return configElement.text
+        return config[key].text;
     } else {
         // Return default.
-        return configElement.value
+        return configElement.value;
     }
 }
 
