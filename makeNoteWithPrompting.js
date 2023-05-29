@@ -141,7 +141,7 @@ function getValueText(config, key) {
         return config[key].text;
     } else {
         // Return default.
-        return configElement.value;
+        return config[key].value;
     }
 }
 
