@@ -39,6 +39,20 @@ function validateRequiredConfigElementProperties(config) {
     }
 }
 
+// Sort references array to ensure logical ordering of the prompts.
+function sortReferences(references) {
+    // Sort and return.
+    return references.sort((a, b) => {
+        if (a.reference == b.key) {
+            return 1;
+        } else if (b.reference == a.key) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+}
+
 
 // Get the reference from the config element value if it exists.
 function getReference(config, key) {
@@ -211,22 +225,7 @@ async function issuePrompt(tp, configElement) {
     }
 
     // Return the value.
-    return value
-}
-
-
-// Sort references array to ensure logical ordering of the prompts.
-function sortReferences(references) {
-    // Sort and return.
-    return references.sort((a, b) => {
-        if (a.reference == b.key) {
-            return 1
-        } else if (b.reference == a.key) {
-            return -1
-        } else {
-            return 0
-        }
-    })
+    return value;
 }
 
 
