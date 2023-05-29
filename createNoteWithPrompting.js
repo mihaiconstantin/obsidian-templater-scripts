@@ -137,7 +137,7 @@ function getValueText(config, key) {
 
 
 // Perform custom user checks on the config element values.
-function checkConfigElementValue(config, key) {
+async function checkConfigElementValue(config, key) {
     // If the value has a custom user check.
     if (config[key].hasOwnProperty("check")) {
         // If the check is not a function.
@@ -146,8 +146,17 @@ function checkConfigElementValue(config, key) {
             throw new Error("The 'check' property must be a function.");
         }
 
-        // Check the value.
-        const checkResult = config[key].check(config[key].value);
+        // Assume the check fails.
+        let checkResult = false;
+
+        // Try to check the value.
+        try {
+            // Check the value.
+            checkResult = await Promise.resolve(config[key].check(config[key].value));
+        } catch (error) {
+            // Throw if the checking failed.
+            throw new Error(`Failed checking '${key}' configuration value.`);
+        }
 
         // If the check failed.
         if (!checkResult) {
@@ -260,7 +269,7 @@ async function elicitPromptAnswers(tp, config) {
             config[key].value = await processConfigElementValue(config, key)
 
             // Check the value if the config has a custom user check.
-            checkConfigElementValue(config, key)
+            await checkConfigElementValue(config, key);
         }
 
         // Sort the references to respect reference dependency.
@@ -284,7 +293,7 @@ async function elicitPromptAnswers(tp, config) {
             config[key].value = await processConfigElementValue(config, references[i].key)
 
             // Check the value if the config has a custom user check.
-            checkConfigElementValue(config, references[i].key)
+            await checkConfigElementValue(config, reference.key);
         }
     } catch (error) {
         // Set the default message to note creation cancelation.
