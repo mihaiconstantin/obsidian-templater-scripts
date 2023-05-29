@@ -339,7 +339,7 @@ async function elicitPromptAnswers(tp, config) {
  *
  * @throws {Error} - Throws an error for various reasons. Error handling in the template is recommended.
 */
-async function createNoteWithPrompting(tp, config, ext = ".md") {
+async function makeNoteWithPrompting(tp, config, ext = ".md") {
     // If the invocation mode is creating a new note.
     if (tp.config.run_mode === 0) {
         // Validate the config elements required for note creation before prompting.
@@ -384,4 +384,4 @@ async function createNoteWithPrompting(tp, config, ext = ".md") {
 
 
 // Export the function.
-module.exports = createNoteWithPrompting
+module.exports = makeNoteWithPrompting
