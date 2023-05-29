@@ -283,15 +283,15 @@ async function elicitPromptAnswers(tp, config) {
         references = sortReferences(references);
 
         // For each object that had a reference.
-        for (let i = 0; i < references.length; i++) {
+        for (const reference of references) {
             // Replace the config element reference placeholder with the reference value.
-            config[references[i].key].value = config[references[i].key].value.replace(
+            config[reference.key].value = config[reference.key].value.replace(
                 /{{.*}}/g,
-                config[references[i].reference].value
+                config[reference.reference].value
             );
 
             // If the value that referenced also requires prompting.
-            if (config[references[i].key].prompt) {
+            if (config[reference.key].prompt) {
                 // Prompt the user to modify the referenced value.
                 config[reference.key].value = await issuePrompt(tp, config, reference.key);
             }
