@@ -1,5 +1,15 @@
+// Validate configuration object size.
+function validateConfigFormat(config) {
+    // If the config is empty.
+    if (Object.keys(config).length === 0) {
+        // Throw.
+        throw new Error("The configuration object is empty.");
+    }
+}
+
+
 // Validate the required config elements.
-function validateRequiredConfigElements(config) {
+function validateNoteCreationConfigElements(config) {
     // Ensure the config has the required properties.
     if (!config.hasOwnProperty("path")) {
         // Throw.
@@ -323,16 +333,21 @@ async function elicitPromptAnswers(tp, config) {
  *
  * @param {object} tp - The `Templater` object.
  * @param {object} config - A configuration object containing objects used in the template.
- * @param {string} fileToMove - The newly created file that needs to be renamed and moved accordingly.
  * @param {string} ext - The file extension. Defaults to `.md`.
  *
- * @returns {Promise<TFile>} - A promise that resolves to the newly created note `TFile` object.
+ * @returns {Promise<TFile|undefined>} - A promise that resolves to the newly created note `TFile` object if `Templater` was able to create the note. Otherwise, `undefined`.
  *
  * @throws {Error} - Throws an error for various reasons. Error handling in the template is recommended.
 */
 async function createNoteWithPrompting(tp, config, ext = ".md") {
-    // Validate the config object.
-    validateRequiredConfigElements(config);
+    // If the invocation mode is creating a new note.
+    if (tp.config.run_mode === 0) {
+        // Validate the config elements required for note creation before prompting.
+        validateNoteCreationConfigElements(config);
+    }
+
+    // Validate the config object format.
+    validateConfigFormat(config);
 
     // Validate the properties of config elements.
     validateRequiredConfigElementProperties(config);
@@ -340,25 +355,31 @@ async function createNoteWithPrompting(tp, config, ext = ".md") {
     // Adjust the passed by reference config object based on the user's input.
     await elicitPromptAnswers(tp, config);
 
-    // Check if the file exists.
-    const fileExists = await tp.file.exists(
-        `${config.path.value}/${config.filename.value}${ext}`
-    );
+    // If the invocation mode is creating a new note.
+    if (tp.config.run_mode === 0) {
+        // Validate the config elements required for note creation.
+        validateNoteCreationConfigElements(config);
 
-    // If the file exists.
-    if (fileExists) {
-        // Throw.
-        throw new Error(`Note '${config.filename.value}' already exists.`);
+        // Check if the file exists.
+        const fileExists = await tp.file.exists(
+            `${config.path.value}/${config.filename.value}${ext}`
+        );
+
+        // If the file exists.
+        if (fileExists) {
+            // Throw.
+            throw new Error(`Note '${config.filename.value}' already exists.`);
+        }
+
+        // Get a file object for the temporary note created.
+        const file = await tp.file.find_tfile(tp.file.path(true));
+
+        // Move the note to the desired location.
+        await tp.file.move(`${config.path.value}/${config.filename.value}`, file);
+
+        // Return the file object.
+        return file;
     }
-
-    // Get a file object for the temporary note created.
-    const file = await tp.file.find_tfile(tp.file.path(true));
-
-    // Move the note to the desired location.
-    await tp.file.move(`${config.path.value}/${config.filename.value}`, file);
-
-    // Return the file object.
-    return file;
 }
 
 
