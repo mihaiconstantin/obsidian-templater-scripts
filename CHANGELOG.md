@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0
+
+### Added
+
+- Add support for both inserting the template in the currently open note and
+  creating a new note from the template for the `makeNoteWithPrompting` user
+  script. This behavior is controlled via the the `Templater` invocation (i.e.,
+  the commands `Templater: Create new note from template` and `Templater: Open
+  insert Template modal`).
+- Add functionality for running arbitrary functions on the `value` property of
+  the configuration elements. This can be useful for performing [custom
+  processing](docs/makeNoteWithPrompting.md) on the user input before it is
+  inserted into the template. The function is specified via the `process`
+  property of the configuration element. The function is passed the `value`
+  property of the configuration element and should return a string
+
+### Changed
+
+- Rename [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) to
+  [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md). This is a breaking
+  change for users of the `createNoteWithPrompting` user script.
+- Improve documentation for
+  [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script.
+- Refactor code for [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) to
+  improve readability and maintainability.
+
 ## 1.4.0
 
 ### Added
@@ -19,7 +45,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Update [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user
+- Update [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user
   script to return the
   [`TFile`](https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L3616)
   object of the newly created note. This can be handy for further processing of
@@ -46,12 +72,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Add [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user script
+- Add [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script
   to create a new note from template and automate prompting based on the
   template configuration variables. The script also supports referencing
   semantics for the template configuration variables via the `{{` and `}}`
-  syntax. Check out the [documentation](docs/createNoteWithPrompting.md) for
+  syntax. Check out the [documentation](docs/makeNoteWithPrompting.md) for
   examples.
 - Add documentation for
-  [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user script.
+  [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script.
 - Add general repository documentation in the `README.md` file.
