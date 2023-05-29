@@ -1,36 +1,40 @@
-// Validate the config object since we can not use types.
-function validateConfig(config) {
+// Validate the required config elements.
+function validateRequiredConfigElements(config) {
     // Ensure the config has the required properties.
     if (!config.hasOwnProperty("path")) {
         // Throw.
-        throw new Error("Missing required 'path' config.")
+        throw new Error("Missing required 'path' configuration element.");
     }
 
     // Ensure the config has the required properties.
     if (!config.hasOwnProperty("filename")) {
         // Throw.
-        throw new Error("Missing required 'filename' config.")
+        throw new Error("Missing required 'filename' configuration element.");
 
     }
+}
 
+
+// Validate the required config element properties.
+function validateRequiredConfigElementProperties(config) {
     // Ensure that each object on the config has the three required properties.
     for (const key in config) {
         // Ensure the config has the required properties.
         if (!config[key].hasOwnProperty("prompt")) {
             // Throw.
-            throw new Error(`Missing required 'prompt' property for '${key}' config.`)
+            throw new Error(`Missing required '${key}.prompt' property.`);
         }
 
         // Ensure the config has the required properties.
         if (!config[key].hasOwnProperty("display")) {
             // Throw.
-            throw new Error(`Missing required 'display' property for '${key}' config.`)
+            throw new Error(`Missing required '${key}.display' property.`);
         }
 
         // Ensure the config has the required properties.
         if (!config[key].hasOwnProperty("value")) {
             // Throw.
-            throw new Error(`Missing required 'value' property for '${key}' config.`)
+            throw new Error(`Missing required '${key}.value' property.`);
         }
     }
 }
@@ -313,7 +317,10 @@ async function elicitPromptAnswers(tp, config) {
 */
 async function createNoteWithPrompting(tp, config, ext = ".md") {
     // Validate the config object.
-    validateConfig(config)
+    validateRequiredConfigElements(config)
+
+    // Validate the properties of config elements.
+    validateRequiredConfigElementProperties(config)
 
     // Adjust the passed by reference config object based on the user's input.
     await elicitPromptAnswers(tp, config)
