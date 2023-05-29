@@ -184,43 +184,43 @@ async function processConfigElementValue(config, key) {
 
 
 // Issue the correct prompt baaed on value type.
-async function issuePrompt(tp, configElement) {
+async function issuePrompt(tp, config, key) {
     // Define the value.
     let value;
 
     // If the config element is an array.
-    if (Array.isArray(configElement.value)) {
+    if (Array.isArray(config[key].value)) {
         // Show the user a list of options to choose from.
         value = await tp.system.suggester(
             // The text representation of the items.
-            getValueText(configElement),
+            getValueText(config, key),
 
             // The actual item values.
-            configElement.value,
+            config[key].value,
 
             // Throw on cancel.
             true,
 
             // The placeholder text.
-            configElement.display,
+            config[key].display,
 
             // Whether or not there is a limit.
-            getLimit(configElement)
+            getLimit(config, key)
         );
     } else {
         // Prompt the user for the value in text form.
         value = await tp.system.prompt(
             // The prompt message.
-            configElement.display,
+            config[key].display,
 
             // The default, prefilled value.
-            configElement.value,
+            config[key].value,
 
             // Throw on cancel.
             true,
 
             // Whether or not the prompt is multiline.
-            getMultiLine(configElement)
+            getMultiLine(config, key)
         );
     }
 
@@ -253,7 +253,7 @@ async function elicitPromptAnswers(tp, config) {
             // If the config element requires a prompt.
             if (config[key].prompt) {
                 // Update the config element value based on the prompt.
-                config[key].value = await issuePrompt(tp, config[key])
+                config[key].value = await issuePrompt(tp, config, key);
             }
 
             // Process the value if the config has a custom user process.
@@ -277,7 +277,7 @@ async function elicitPromptAnswers(tp, config) {
             // If the value that referenced also requires prompting.
             if (config[references[i].key].prompt) {
                 // Prompt the user to modify the referenced value.
-                config[references[i].key].value = await issuePrompt(tp, config[references[i].key]);
+                config[reference.key].value = await issuePrompt(tp, config, reference.key);
             }
 
             // Process the value if the config has a custom user process.
