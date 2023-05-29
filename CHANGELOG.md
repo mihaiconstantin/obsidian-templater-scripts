@@ -19,7 +19,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Update [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user
+- Update [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user
   script to return the
   [`TFile`](https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L3616)
   object of the newly created note. This can be handy for further processing of
@@ -46,12 +46,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Add [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user script
+- Add [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script
   to create a new note from template and automate prompting based on the
   template configuration variables. The script also supports referencing
   semantics for the template configuration variables via the `{{` and `}}`
-  syntax. Check out the [documentation](docs/createNoteWithPrompting.md) for
+  syntax. Check out the [documentation](docs/makeNoteWithPrompting.md) for
   examples.
 - Add documentation for
-  [`createNoteWithPrompting`](docs/createNoteWithPrompting.md) user script.
+  [`createNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script.
 - Add general repository documentation in the `README.md` file.
