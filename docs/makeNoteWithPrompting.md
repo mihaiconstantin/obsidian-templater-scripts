@@ -678,7 +678,7 @@ _%>
 
 The following video shows the template above in action:
 
-<video src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241034879-7977b870-80f7-4582-b1cf-b8cbbd9a5e95.mp4" controls="controls" muted="muted" style="max-width:100%">
+<video src="https://user-images.githubusercontent.com/20051042/241812321-520363a7-384e-46da-90ba-31c263b656da.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241812321-520363a7-384e-46da-90ba-31c263b656da.mp4" controls="controls" muted="muted" style="max-width:100%">
 </video>
 
 [`Templater`]: https://silentvoid13.github.io/Templater/introduction.html
