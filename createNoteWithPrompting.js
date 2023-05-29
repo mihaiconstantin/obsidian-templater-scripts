@@ -41,9 +41,9 @@ function validateRequiredConfigElementProperties(config) {
 
 
 // Get the reference from the config element value if it exists.
-function getReference(configElementValue) {
+function getReference(config, key) {
     // If not string.
-    if (typeof configElementValue !== "string") {
+    if (typeof config[key].value !== "string") {
         // Return undefined.
         return undefined;
     }
@@ -52,7 +52,7 @@ function getReference(configElementValue) {
     const referencePattern = /{{\s*(.*?)\s*}}/;
 
     // Perform the match.
-    const match = configElementValue.match(referencePattern);
+    const match = config[key].value.match(referencePattern);
 
     // Check if the match is not null.
     if (match != null) {
@@ -240,7 +240,7 @@ async function elicitPromptAnswers(tp, config) {
         // For each config object in the template config.
         for (const key in config) {
             // Attempt to get the reference.
-            const reference = getReference(config[key].value);
+            const reference = getReference(config, key);
 
             // If the config element value has a reference.
             if (reference != null) {
