@@ -2,10 +2,16 @@
     <code>Templater</code> User Scripts <br>
     for <code>Obsidian</code>
     <br/>
-    <a href="https://github.com/mihaiconstantin/obsidian-templater-scripts">
-        GitHub Page
-    </a>
 </h1>
+
+<!-- badges: start -->
+<p align="center">
+    <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repository status"/></a>
+    <a href="https://github.com/mihaiconstantin/obsidian-templater-scripts/releases"><img src="https://img.shields.io/github/v/release/mihaiconstantin/obsidian-templater-scripts?display_name=tag&sort=semver" alt="GitHub version"/></a>
+    <a href="https://github.com/mihaiconstantin/obsidian-templater-scripts/issues"><img src="https://img.shields.io/github/issues/mihaiconstantin/obsidian-templater-scripts" alt="GitHub issues"></a>
+    <a href="https://github.com/mihaiconstantin/obsidian-templater-scripts"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mihaiconstantin/obsidian-templater-scripts?style=social"></a>
+</p>
+<!-- badges: end -->
 
 ## ℹ️ Description
 
