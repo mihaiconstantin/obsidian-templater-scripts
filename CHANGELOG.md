@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.1.0
+
+### Added
+
+- Update the value processing functionality to display a user modal indicating
+  that the value is being processed. This is useful for long running value
+  processing functions (e.g., fetching data from an external API). The modal is
+  closed once the value processing function completes. After the model is
+  closed, the user is presented with a prompt where the processed valued can be
+  further edited before being inserted into the template.
+
+### Fixed
+
+- Revert previous change and wrapped documentation of `makeNoteWithPrompting`
+  with `<!--  {% raw %} -->` and `<!--  {% endraw %} -->` tags. This allows the
+  documentation to be rendered properly on the GitHub Pages website, and on
+  GitHub.
+- Fixed the `{{ ... }}` not being escaped on the GitHub Pages website. This
+  caused the `{{ ... }}` to be interpreted as a `Jekyll` tag and not rendered
+  properly. Unfortunately, references of `{{ ... }}` on GitHub now include a `\`
+  as `\{{ ... }}`.
+
 ## 2.0.0
 
 ### Added

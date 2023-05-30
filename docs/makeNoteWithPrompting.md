@@ -562,7 +562,7 @@ Let's put everything together and see how the complete template looks like:
 // Get a movie summary based on its title.
 async function getMovieSummary(prompt, systemPrompt = "Your role is to identify a movie by its title and provide a succinct summary.") {
     // The OpenAI API endpoint.
-    const openaiURL = "https://api.openai.com/v1/chat/completions";
+    const openAiURL = "https://api.openai.com/v1/chat/completions";
 
     // The OpenAI API request headers.
     const headers = {
@@ -580,7 +580,7 @@ async function getMovieSummary(prompt, systemPrompt = "Your role is to identify 
     });
 
     // Send the request to the OpenAI API.
-    const response = await fetch(openaiURL, {
+    const response = await fetch(openAiURL, {
         method: "POST",
         headers: headers,
         body: body
@@ -676,7 +676,7 @@ _%>
 
 The following video shows the template above in action:
 
-<video src="https://user-images.githubusercontent.com/20051042/241812321-520363a7-384e-46da-90ba-31c263b656da.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241812321-520363a7-384e-46da-90ba-31c263b656da.mp4" controls="controls" muted="muted" style="max-width:100%">
+<video src="https://user-images.githubusercontent.com/20051042/241931701-59e876a9-865a-4aa7-b71f-562c5a846f3c.mp4" data-canonical-src="https://user-images.githubusercontent.com/20051042/241931701-59e876a9-865a-4aa7-b71f-562c5a846f3c.mp4" controls="controls" muted="muted" style="max-width:100%">
 </video>
 
 [`Templater`]: https://silentvoid13.github.io/Templater/introduction.html

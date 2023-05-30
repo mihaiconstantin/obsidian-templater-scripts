@@ -177,6 +177,59 @@ async function checkConfigElementValue(config, key) {
 }
 
 
+// Create a modal for displaying informational messages.
+function makeInformationalModal(tp) {
+    // Define modal class.
+    class InformationalModal extends tp.obsidian.Modal {
+        // Modal text.
+        #content = "";
+        #title = "";
+
+        // Setter for the content.
+        set content(value) {
+            this.#content = value;
+        }
+
+        // Setter for the title.
+        set title(value) {
+            this.#title = value;
+        }
+
+        // Constructor.
+        constructor(app) {
+            super(app);
+        }
+
+        // On open event handler.
+        onOpen() {
+            // Extract the content container.
+            let { contentEl, titleEl } = this;
+
+            // Set the title.
+            titleEl.setText(this.#title);
+
+            // Set the content.
+            contentEl.setText(this.#content);
+        }
+
+        // On close event handler.
+        onClose() {
+            // Extract the content container.
+            let { contentEl, titleEl } = this;
+
+            // Clear the title.
+            titleEl.empty();
+
+            // Clear the content.
+            contentEl.empty();
+        }
+    }
+
+    // Return a modal instance.
+    return new InformationalModal(app);
+}
+
+
 // Perform customer user processing on the config element values.
 async function processConfigElementValue(tp, config, key) {
     // If the value has a custom user process.
@@ -190,10 +243,23 @@ async function processConfigElementValue(tp, config, key) {
         // Store the current value.
         const originalValue = config[key].value;
 
+        // Get a modal class instance.
+        const modal = makeInformationalModal(tp);
+
+        // Set the modal title and content.
+        modal.title = `Processing '${key}' value.`;
+        modal.content = `Please wait while the '${key}' value is being processed...`;
+
         // Try to process the value.
         try {
+            // Open the modal.
+            modal.open();
+
             // Process and update the value.
             config[key].value = await Promise.resolve(config[key].process(originalValue));
+
+            // Close the user modal.
+            modal.close();
 
             // Give the user a chance to modify the result.
             config[key].value = await issuePrompt(tp, config, key);
