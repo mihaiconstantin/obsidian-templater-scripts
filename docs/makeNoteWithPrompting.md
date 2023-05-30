@@ -127,9 +127,9 @@ properties.
   element. The script adjusts the prompting order to ensure all references are
   correctly resolved.
 
-**_If you are reading this page on GitHub, please note that the `\` is used for
+⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
 escaping the delimiters used for referencing. In the actual template, the `\`
-should be omitted._**
+should be omitted.**
 
 Aside from the `prompt`, `display`, and `value` properties above, the following
 optional properties can also be used.
@@ -357,9 +357,9 @@ will be the same as the one shown in the previous example.
 
 ### Value referencing
 
-**_If you are reading this page on GitHub, please note that the `\` is used for
+⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
 escaping the delimiters used for referencing. In the actual template, the `\`
-should be omitted._**
+should be omitted.**
 
 Let's continue building on the template from the previous example and see how we
 can use *referencing* to make our template more dynamic. Suppose we want the
