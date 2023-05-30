@@ -562,7 +562,7 @@ Let's put everything together and see how the complete template looks like:
 // Get a movie summary based on its title.
 async function getMovieSummary(prompt, systemPrompt = "Your role is to identify a movie by its title and provide a succinct summary.") {
     // The OpenAI API endpoint.
-    const openaiURL = "https://api.openai.com/v1/chat/completions";
+    const openAiURL = "https://api.openai.com/v1/chat/completions";
 
     // The OpenAI API request headers.
     const headers = {
@@ -580,7 +580,7 @@ async function getMovieSummary(prompt, systemPrompt = "Your role is to identify 
     });
 
     // Send the request to the OpenAI API.
-    const response = await fetch(openaiURL, {
+    const response = await fetch(openAiURL, {
         method: "POST",
         headers: headers,
         body: body
