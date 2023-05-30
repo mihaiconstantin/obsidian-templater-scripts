@@ -1,3 +1,5 @@
+<!--  {% raw %} -->
+
 <h1 align="center" style="line-height: 2">
     <code>Templater</code> User Scripts <br>
     for <code>Obsidian</code>
@@ -121,11 +123,11 @@ properties.
 - Holds the value of the configuration element that is intended for the
   template. The type of the `value` property determines the type of prompt used
   and can be either a string or an array of elements.
-- Referencing other elements is possible using the <!--  {% raw %} --> `{{` and
-  `}}` <!-- {% endraw %} --> delimiters. For example, if the `value` of the
-  `filename` element is set to `\{{ path }}`, the `value` of the `filename`
-  element will be set to the `value` of the `path` element. The script adjusts
-  the prompting order to ensure all references are correctly resolved.
+- Referencing other elements is possible using the `{{` and `}}` delimiters. For
+  example, if the `value` of the `filename` element is set to `{{ path }}`, the
+  `value` of the `filename` element will be set to the `value` of the `path`
+  element. The script adjusts the prompting order to ensure all references are
+  correctly resolved.
 
 ⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
 escaping the delimiters used for referencing. In the actual template, the `\`
@@ -364,8 +366,8 @@ should be omitted.**
 Let's continue building on the template from the previous example and see how we
 can use *referencing* to make our template more dynamic. Suppose we want the
 title of the movie to set as the file name of the note. We can easily do this by
-using the `\{{ ... }}` syntax to reference the `title` element in the
-`filename`. To achieve this, we need to change our `config` object as follows:
+using the `{{ ... }}` syntax to reference the `title` element in the `filename`.
+To achieve this, we need to change our `config` object as follows:
 
 ```js
 // The configuration object containing several elements.
@@ -376,7 +378,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "\{{ title }}"
+        value: "{{ title }}"
     },
 
     // The movie title.
@@ -512,7 +514,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "\{{ title }}",
+        value: "{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
@@ -615,7 +617,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "\{{ title }}"
+        value: "{{ title }}"
     },
 
     // The movie title.
@@ -645,7 +647,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "\{{ title }}",
+        value: "{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
@@ -692,3 +694,5 @@ The following video shows the template above in action:
 [`TFile`]: https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L3616
 [notice]: https://github.com/obsidianmd/obsidian-api/blob/583ba39e3f6c0546de5e5e8742256a60e2d78ebc/obsidian.d.ts#L2547
 [`makeNoteWithPrompting`]: https://github.com/mihaiconstantin/obsidian-templater-scripts/blob/main/makeNoteWithPrompting.js
+
+<!-- {% endraw %} -->
