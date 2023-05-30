@@ -121,11 +121,11 @@ properties.
 - Holds the value of the configuration element that is intended for the
   template. The type of the `value` property determines the type of prompt used
   and can be either a string or an array of elements.
-- Referencing other elements is possible using the `\{{` and `}}` delimiters.
-  For example, if the `value` of the `filename` element is set to `\{{ path }}`,
-  the `value` of the `filename` element will be set to the `value` of the `path`
-  element. The script adjusts the prompting order to ensure all references are
-  correctly resolved.
+- Referencing other elements is possible using the <!--  {% raw %} --> `{{` and
+  `}}` <!-- {% endraw %} --> delimiters. For example, if the `value` of the
+  `filename` element is set to `\{{ path }}`, the `value` of the `filename`
+  element will be set to the `value` of the `path` element. The script adjusts
+  the prompting order to ensure all references are correctly resolved.
 
 ⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
 escaping the delimiters used for referencing. In the actual template, the `\`
