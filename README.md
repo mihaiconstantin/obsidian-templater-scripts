@@ -1,6 +1,10 @@
 <h1 align="center" style="line-height: 2">
     <code>Templater</code> User Scripts <br>
     for <code>Obsidian</code>
+    <br/>
+    <a href="https://github.com/mihaiconstantin/obsidian-templater-scripts">
+        GitHub Page
+    </a>
 </h1>
 
 ## ℹ️ Description
