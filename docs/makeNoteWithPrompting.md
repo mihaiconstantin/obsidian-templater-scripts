@@ -121,9 +121,9 @@ properties.
 - Holds the value of the configuration element that is intended for the
   template. The type of the `value` property determines the type of prompt used
   and can be either a string or an array of elements.
-- Referencing other elements is possible using the `{{` and `}}` delimiters. For
-  example, if the `value` of the `filename` element is set to `{{ path }}`, the
-  `value` of the `filename` element will be set to the `value` of the `path`
+- Referencing other elements is possible using the `\{{` and `}}` delimiters.
+  For example, if the `value` of the `filename` element is set to `\{{ path }}`,
+  the `value` of the `filename` element will be set to the `value` of the `path`
   element. The script adjusts the prompting order to ensure all references are
   correctly resolved.
 
@@ -356,8 +356,8 @@ will be the same as the one shown in the previous example.
 Let's continue building on the template from the previous example and see how we
 can use *referencing* to make our template more dynamic. Suppose we want the
 title of the movie to set as the file name of the note. We can easily do this by
-using the `{{ ... }}` syntax to reference the `title` element in the `filename`.
-To achieve this, we need to change our `config` object as follows:
+using the `\{{ ... }}` syntax to reference the `title` element in the
+`filename`. To achieve this, we need to change our `config` object as follows:
 
 ```js
 // The configuration object containing several elements.
@@ -368,7 +368,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "{{ title }}"
+        value: "\{{ title }}"
     },
 
     // The movie title.
@@ -504,7 +504,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "{{ title }}",
+        value: "\{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
@@ -607,7 +607,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "{{ title }}"
+        value: "\{{ title }}"
     },
 
     // The movie title.
@@ -637,7 +637,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "{{ title }}",
+        value: "\{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
