@@ -448,12 +448,6 @@ Our custom processing function is called `getMovieSummary` and takes as input
 the title of a movie and returns its summary, e.g., using the `OpenAI` API, as
 seen below.
 
-<details><summary>Expand to view implementation of <code>getMovieSummary</code>.</summary>
-
-*Note.* This function assumes that your `OpenAI` API key is stored in the
-`OPENAI_API_KEY` environment variable and is available system-wide (e.g., via
-`launchctl setenv` for `macOS`).
-
 ```js
 // Get a movie summary based on its title.
 async function getMovieSummary(prompt, systemPrompt = "Your role is to identify a movie by its title and provide a succinct summary.") {
@@ -493,7 +487,9 @@ async function getMovieSummary(prompt, systemPrompt = "Your role is to identify 
 }
 ```
 
-</details>
+*Note.* The function `getMovieSummary` assumes that your `OpenAI` API key is
+stored in the `OPENAI_API_KEY` environment variable and is available system-wide
+(e.g., via `launchctl setenv` for `macOS`).
 
 Now that we have our custom processing function, we can place it at the top of
 our template file and then add it to the `process` property on the `summary`
