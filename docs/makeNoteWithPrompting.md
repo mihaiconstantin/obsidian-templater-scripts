@@ -121,11 +121,15 @@ properties.
 - Holds the value of the configuration element that is intended for the
   template. The type of the `value` property determines the type of prompt used
   and can be either a string or an array of elements.
-- Referencing other elements is possible using the `{{` and `}}` delimiters. For
-  example, if the `value` of the `filename` element is set to `{{ path }}`, the
-  `value` of the `filename` element will be set to the `value` of the `path`
+- Referencing other elements is possible using the `\{{` and `}}` delimiters.
+  For example, if the `value` of the `filename` element is set to `\{{ path }}`,
+  the `value` of the `filename` element will be set to the `value` of the `path`
   element. The script adjusts the prompting order to ensure all references are
   correctly resolved.
+
+⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
+escaping the delimiters used for referencing. In the actual template, the `\`
+should be omitted.**
 
 Aside from the `prompt`, `display`, and `value` properties above, the following
 optional properties can also be used.
@@ -353,11 +357,15 @@ will be the same as the one shown in the previous example.
 
 ### Value referencing
 
+⚠️ **If you are reading this page on GitHub, please note that the `\` is used for
+escaping the delimiters used for referencing. In the actual template, the `\`
+should be omitted.**
+
 Let's continue building on the template from the previous example and see how we
 can use *referencing* to make our template more dynamic. Suppose we want the
 title of the movie to set as the file name of the note. We can easily do this by
-using the `{{ ... }}` syntax to reference the `title` element in the `filename`.
-To achieve this, we need to change our `config` object as follows:
+using the `\{{ ... }}` syntax to reference the `title` element in the
+`filename`. To achieve this, we need to change our `config` object as follows:
 
 ```js
 // The configuration object containing several elements.
@@ -368,7 +376,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "{{ title }}"
+        value: "\{{ title }}"
     },
 
     // The movie title.
@@ -448,12 +456,6 @@ Our custom processing function is called `getMovieSummary` and takes as input
 the title of a movie and returns its summary, e.g., using the `OpenAI` API, as
 seen below.
 
-<details><summary>Expand to view implementation of <code>getMovieSummary</code>.</summary>
-
-*Note.* This function assumes that your `OpenAI` API key is stored in the
-`OPENAI_API_KEY` environment variable and is available system-wide (e.g., via
-`launchctl setenv` for `macOS`).
-
 ```js
 // Get a movie summary based on its title.
 async function getMovieSummary(prompt, systemPrompt = "Your role is to identify a movie by its title and provide a succinct summary.") {
@@ -493,7 +495,9 @@ async function getMovieSummary(prompt, systemPrompt = "Your role is to identify 
 }
 ```
 
-</details>
+*Note.* The function `getMovieSummary` assumes that your `OpenAI` API key is
+stored in the `OPENAI_API_KEY` environment variable and is available system-wide
+(e.g., via `launchctl setenv` for `macOS`).
 
 Now that we have our custom processing function, we can place it at the top of
 our template file and then add it to the `process` property on the `summary`
@@ -508,7 +512,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "{{ title }}",
+        value: "\{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
@@ -611,7 +615,7 @@ let config = {
     filename: {
         prompt: true,
         display: "How to name the movie note?",
-        value: "{{ title }}"
+        value: "\{{ title }}"
     },
 
     // The movie title.
@@ -641,7 +645,7 @@ let config = {
     summary: {
         prompt: true,
         display: "What is the summary of the movie?",
-        value: "{{ title }}",
+        value: "\{{ title }}",
         multiline: true,
         process: getMovieSummary
     }
