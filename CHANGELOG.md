@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.0
+
+### Added
+
+- Add support for setting the `value` to a function that returns a string or an
+  array of strings. The function must be specified with two arguments that are
+  automatically passed at the prompting stage. The first argument is the
+  `Templater` and the second argument represents the configuration object.
+- Add functionality to handle multiple references in the `value` property of a
+  configuration element. This is useful when the `value` of a configuration
+  element is composed of multiple references (e.g., `{{title}} {{date}}`).
+- Add documentation for the [`prompt`](docs/prompt.md) user script.
+- Add standalone [`prompt`](docs/prompt.md) user script to perform automatic
+  prompting based on a configuration object.
+
+### Changed
+
+- Update [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script to
+  use the new [`prompt`](docs/prompt.md) user script.
+- Simplify documentation for
+  [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) user script.
+
 ## 2.1.0
 
 ### Added
