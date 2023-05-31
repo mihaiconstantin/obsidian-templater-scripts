@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.3.0
+
+### Added
+
+- Add user script [`makeNote`](docs/makeNote.md) that creates a new note from a
+  template without prompting the user for input. This user script is useful when
+  the template variables are known in advance and can be specified in the
+  configuration object. The script correctly handles the file placement in the
+  vault based on the `path` and `filename` configuration elements.
+
 ## 2.2.0
 
 ### Added

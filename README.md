@@ -96,10 +96,11 @@ context of a template. Below you can see a table with the available scripts and
 a brief description. Check out the documentation for each script (i.e., via the
 link) for more information and examples on how to use them.
 
-| 🔗 User Script                                            | Description                                                                                                            |
-| :------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) | Create a new note from template in a specified location, or insert a template at the cursor, with automated prompting. |
-| [`prompt`](docs/prompt.md)                               | Prompts the user based on a configuration object.                                                                      |
+| 🔗 User Script                                            | Description                                                                                                              |
+| :------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| [`prompt`](docs/prompt.md)                               | Prompts the user based on a configuration object.                                                                         |
+| [`makeNote`](docs/makeNote.md)                           | Create a new note from template in a specified location, or insert a template at the cursor, without automated prompting. |
+| [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) | Create a new note from template in a specified location, or insert a template at the cursor, with automated prompting.    |
 
 ## Contributing
 
