@@ -57,7 +57,7 @@ can have some of the following properties:
 {
     prompt: boolean,
     display: string,
-    value: string | string[],
+    value: string | string[] | (tp, config) => string | (tp, config) => string[],
     multiple: boolean,
     limit: number,
     text: string[] | (item: any) => string,
@@ -118,11 +118,20 @@ properties.
 - Holds the value of the configuration element that is intended for the
   template. The type of the `value` property determines the type of prompt used
   and can be either a string or an array of elements.
+- For advanced use cases, it is also possible to set the `value` to a function
+  that returns a string or an array of elements. If set to a function, the
+  function will be evaluated immediately, right before the prompt, if a prompt
+  is requested. The function can be asynchronous and must be declared with two
+  arguments, `tp` and `config`. The `tp` argument represents the [`Templater`]
+  object, and the `config` argument represents the configuration object. The
+  `config` argument is useful for accessing other configuration elements and its
+  state depends on the order of the configuration elements.
 - Referencing other elements is possible using the `{{` and `}}` delimiters. For
   example, if the `value` of the `filename` element is set to `{{ path }}`, the
   `value` of the `filename` element will be set to the `value` of the `path`
   element. The script adjusts the prompting order to ensure all references are
-  correctly resolved.
+  correctly resolved. Also, multiple references are supported (e.g., `Composite
+  value from {{ filename }} and some {{ date }} element`).
 
 Aside from the `prompt`, `display`, and `value` properties above, the following
 optional properties can also be used.
