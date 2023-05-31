@@ -325,6 +325,12 @@ async function elicitPromptAnswers(tp, config) {
     try {
         // For each config object in the template config.
         for (const key in config) {
+            // If the value is expressed as a function.
+            if (typeof config[key].value === "function") {
+                // Evaluate the function.
+                config[key].value = await Promise.resolve(config[key].value(tp, config));
+            }
+
             // Attempt to get the reference.
             const elementReferences = getReferences(config, key);
 
