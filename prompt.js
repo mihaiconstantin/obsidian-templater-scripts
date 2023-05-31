@@ -256,8 +256,11 @@ async function processConfigElementValue(tp, config, key) {
             // Close the user modal.
             modal.close();
 
-            // Give the user a chance to modify the result.
-            config[key].value = await issuePrompt(tp, config, key);
+            // If a prompt is required.
+            if (config[key].prompt) {
+                // Give the user a chance to modify the result.
+                config[key].value = await issuePrompt(tp, config, key);
+            }
         }
         catch (error) {
             // Restore the original value.
