@@ -32,43 +32,55 @@ function validateRequiredConfigElementProperties(config) {
     }
 }
 
+
 // Sort references array to ensure logical ordering of the prompts.
 function sortReferences(references) {
-    // Sort and return.
-    return references.sort((a, b) => {
-        if (a.reference == b.key) {
-            return 1;
-        } else if (b.reference == a.key) {
+    // Sort.
+    references.sort((a, b) => {
+        // `a` should be prompted before `b`.
+        if (b.references.includes(a.key)) {
             return -1;
+
+        // `a` should be prompted after `b`.
+        } else if (a.references.includes(b.key)) {
+            return 1;
+
+        // `a` and `b` are independent.
         } else {
             return 0;
         }
-    });
+    })
 }
 
 
 // Get the reference from the config element value if it exists.
-function getReference(config, key) {
+function getReferences(config, key) {
+    // Create the references array.
+    const references = [];
+
     // If not string.
     if (typeof config[key].value !== "string") {
         // Return undefined.
-        return undefined;
+        return references;
     }
 
-    // Define the pattern.
-    const referencePattern = /{{\s*(.*?)\s*}}/;
-
     // Perform the match.
-    const match = config[key].value.match(referencePattern);
+    const match = config[key].value.match(/{{\s*(.*?)\s*}}/g);
 
     // Check if the match is not null.
     if (match != null) {
-        // Return the first capturing group.
-        return match[1];
+        // For each match.
+        for (const reference of match) {
+            // Remove the curly braces and spaces.
+            const referenceKey = reference.replace(/[{}]/g, "").trim();
+
+            // Add the reference to the array.
+            references.push(referenceKey);
+        }
     }
 
-    // Otherwise return undefined.
-    return undefined;
+    // Otherwise return an empty array.
+    return references;
 }
 
 
@@ -314,12 +326,14 @@ async function elicitPromptAnswers(tp, config) {
         // For each config object in the template config.
         for (const key in config) {
             // Attempt to get the reference.
-            const reference = getReference(config, key);
+            const elementReferences = getReferences(config, key);
 
             // If the config element value has a reference.
-            if (reference != null) {
-                // Add the config key and reference the references array.
-                references.push({ key, reference });
+            if (elementReferences.length !== 0) {
+                // Merge the element references with the references array.
+                references.push(
+                    { key: key, references: elementReferences }
+                );
 
                 // For now continue with the prompts.
                 continue;
@@ -339,15 +353,21 @@ async function elicitPromptAnswers(tp, config) {
         }
 
         // Sort the references to respect reference dependency.
-        references = sortReferences(references);
+        sortReferences(references);
 
-        // For each object that had a reference.
+        // For each configuration element that had a reference.
         for (const reference of references) {
-            // Replace the config element reference placeholder with the reference value.
-            config[reference.key].value = config[reference.key].value.replace(
-                /{{.*}}/g,
-                config[reference.reference].value
-            );
+            // For each reference in the configuration element.
+            for (let i = 0; i < reference.references.length; i++) {
+                // Update the element value with the reference value.
+                config[reference.key].value = config[reference.key].value.replace(
+                    // The reference placeholder.
+                    new RegExp(`{{\\s*${reference.references[i]}\\s*}}`, "g"),
+
+                    // The reference value.
+                    config[reference.references[i]].value
+                );
+            }
 
             // If the value that referenced also requires prompting.
             if (config[reference.key].prompt) {
