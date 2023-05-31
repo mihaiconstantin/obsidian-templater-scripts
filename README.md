@@ -99,6 +99,7 @@ link) for more information and examples on how to use them.
 | 🔗 User Script                                            | Description                                                                                                            |
 | :------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
 | [`makeNoteWithPrompting`](docs/makeNoteWithPrompting.md) | Create a new note from template in a specified location, or insert a template at the cursor, with automated prompting. |
+| [`prompt`](docs/prompt.md)                               | Prompts the user based on a configuration object.                                                                      |
 
 ## Contributing
 
