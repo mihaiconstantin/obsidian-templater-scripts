@@ -256,8 +256,11 @@ async function processConfigElementValue(tp, config, key) {
             // Close the user modal.
             modal.close();
 
-            // Give the user a chance to modify the result.
-            config[key].value = await issuePrompt(tp, config, key);
+            // If a prompt is required.
+            if (config[key].prompt) {
+                // Give the user a chance to modify the result.
+                config[key].value = await issuePrompt(tp, config, key);
+            }
         }
         catch (error) {
             // Restore the original value.
@@ -295,8 +298,8 @@ async function issuePrompt(tp, config, key) {
             getLimit(config, key)
         );
     } else {
-        // Prompt the user for the value in text form.
-        value = await tp.system.prompt(
+        // Capture the prompt promise.
+        const promptPromise = tp.system.prompt(
             // The prompt message.
             config[key].display,
 
@@ -309,6 +312,13 @@ async function issuePrompt(tp, config, key) {
             // Whether or not the prompt is multiline.
             getMultiLine(config, key)
         );
+
+        // Manually focus the input.
+        // See: https://github.com/SilentVoid13/Templater/issues/1120
+        document.getElementsByClassName("templater-prompt-input")[0].focus();
+
+        // Settle the promise.
+        value = await promptPromise;
     }
 
     // Return the value.

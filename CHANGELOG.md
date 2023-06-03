@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.4.0
+
+### Changed
+
+- Add workaround to ensure the text prompt input is focused by default on
+  mobile. This will likely be removed when
+  https://github.com/SilentVoid13/Templater/issues/1120 is resolved.
+- Update value processing functionality to only show the subsequent modal with
+  the processed value only if the prompt was requested in the first place.
+
 ## 2.3.0
 
 ### Added

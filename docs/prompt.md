@@ -186,8 +186,9 @@ optional properties can also be used.
 - Used for further processing the `value` property.
 - This property must be a function that takes a single argument (i.e., the
   `value` of the configuration element) and returns a string. The returned
-  string will set used as the new `value` of the configuration element, and a
-  new prompt modal will be shown with the updated `value`.
+  string will set used as the new `value` of the configuration element. If the
+  property `prompt` is set to `true`, then new prompt modal will be shown with
+  the updated `value` allowing the user to further modify the `value`.
 - This function may also be asynchronous (e.g., useful for fetching data based
   on the `value` property). See the [Examples](#examples) section for more
   information.
