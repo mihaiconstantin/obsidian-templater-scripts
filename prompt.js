@@ -298,8 +298,8 @@ async function issuePrompt(tp, config, key) {
             getLimit(config, key)
         );
     } else {
-        // Prompt the user for the value in text form.
-        value = await tp.system.prompt(
+        // Capture the prompt promise.
+        const promptPromise = tp.system.prompt(
             // The prompt message.
             config[key].display,
 
@@ -312,6 +312,13 @@ async function issuePrompt(tp, config, key) {
             // Whether or not the prompt is multiline.
             getMultiLine(config, key)
         );
+
+        // Manually focus the input.
+        // See: https://github.com/SilentVoid13/Templater/issues/1120
+        document.getElementsByClassName("templater-prompt-input")[0].focus();
+
+        // Settle the promise.
+        value = await promptPromise;
     }
 
     // Return the value.
