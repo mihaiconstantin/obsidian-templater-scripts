@@ -251,7 +251,7 @@ async function processConfigElementValue(tp, config, key) {
             modal.open();
 
             // Process and update the value.
-            config[key].value = await Promise.resolve(config[key].process(originalValue));
+            config[key].value = await Promise.resolve(config[key].process(originalValue, tp, config));
 
             // Close the user modal.
             modal.close();
