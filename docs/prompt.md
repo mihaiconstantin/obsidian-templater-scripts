@@ -61,8 +61,8 @@ can have some of the following properties:
     multiple: boolean,
     limit: number,
     text: string[] | (item: any) => string,
-    check: (value: string) => boolean,
-    process: (value: string) => string
+    check: (value: string, tp: Templater, config: object) => boolean,
+    process: (value: string, tp: Templater, config: object) => string
 }
 ```
 
@@ -171,27 +171,49 @@ optional properties can also be used.
 
 - Used for checking whether the `value` property is valid according to some
   custom criteria.
-- This property must be a function that takes a single argument (i.e., the
-  `value` of the configuration element) and returns a boolean.
+- This property must be a function that takes three arguments, namely, `value`,
+  `tp`, and `config`. The `value` argument represents the `value` of the
+  configuration element. The `tp` argument represents the [`Templater`] object.
+  The `config` argument represents the configuration object. The `tp` and
+  `config` arguments are useful, e.g., for accessing other configuration
+  elements and their `value` properties at the time of the check. The function
+  must return a boolean, which gets interpreted as follows:
   - If the function returns `true`, the `value` property is considered valid.
   - If the function returns `false`, the `value` property is considered invalid
     and an error is thrown.
 - If the `check` property is used in conjunction with `prompt: true`, the check
-  is performed after the prompt modal is submitted.
+  is performed after the prompt modal is submitted. As a rule, the check if
+  always performed last, even if the configuration element has a `process`
+  property for post-processing (i.e., see below).
 - This function may also be asynchronous. See the [Examples](#examples) section
   for more information.
 
 **`process`**
 
 - Used for further processing the `value` property.
-- This property must be a function that takes a single argument (i.e., the
-  `value` of the configuration element) and returns a string. The returned
-  string will set used as the new `value` of the configuration element. If the
-  property `prompt` is set to `true`, then new prompt modal will be shown with
-  the updated `value` allowing the user to further modify the `value`.
+- This property must be a function that takes three arguments, namely, `value`,
+  `tp`, and `config`. The `value` argument represents the `value` of the
+  configuration element. The `tp` argument represents the [`Templater`] object.
+  The `config` argument represents the configuration object. The `tp` and
+  `config` arguments are useful for accessing other configuration elements and
+  at the time of the processing.
+- The function must return a string which will be set used as the new `value` of
+  the configuration element. If the property `prompt` is set to `true`, then new
+  prompt modal will be shown with the updated `value` allowing the user to
+  further modify the `value`. If this behavior is not desired, you can set the
+  `prompt` property to `false` in the `process` function, which will prevent the
+  prompt modal from being shown.
 - This function may also be asynchronous (e.g., useful for fetching data based
   on the `value` property). See the [Examples](#examples) section for more
   information.
+
+As a rule, the following order is followed when evaluating the configuration
+elements:
+- If the `value` property is set to a function, the function is evaluated first.
+- Then, if a prompt is requested (i.e., `prompt: true`), the prompt is shown and
+  the user can enter a new `value`.
+- Then, if the `process` property is set, the `value` is processed.
+- Finally, if the `check` property is set, the `value` is checked.
 
 ## Value
 
@@ -425,6 +447,21 @@ Now, running `Templater` and selecting `thriller` as the genre will result in an
 error message saying that the value is not valid, and the script will stop
 executing.
 
+*Note.* The `check` property can also specify a function with the `tp` and
+`config` parameters should more complex validation be required, e.g.:
+
+```js
+// ...
+
+check: (value, tp, config) => {
+    // Do something with the `config` or `tp` objects here.
+
+    // Return `true` or `false` based on the validation.
+}
+
+// ...
+```
+
 ### Value Processing
 
 Finally, let's see how to use *value processing* to modify the `value` property
@@ -489,7 +526,9 @@ async function getMovieSummary(prompt, systemPrompt = "Your role is to identify 
 
 *Note.* The function `getMovieSummary` assumes that your `OpenAI` API key is
 stored in the `OPENAI_API_KEY` environment variable and is available system-wide
-(e.g., via `launchctl setenv` for `macOS`).
+(e.g., via `launchctl setenv` for `macOS`). If you do not know how to achieve
+this, just replace `${process.env.OPENAI_API_KEY}` in the function with your
+actual API key.
 
 Now that we have our custom processing function, we can place it at the top of
 our template file and then add it to the `process` property on the `summary`
@@ -515,7 +554,22 @@ let config = {
 
 *Note.* It might take a few seconds for the API call to complete. Once the
 summary is available, the user will be prompted again with the chance to edit
-it.
+it. If you would like to avoid the confirmation prompt, you can leverage the
+additional arguments, by updating the `process` property to the following:
+
+```js
+// ...
+
+process: async (value, tp, config) => {
+    // Disable the confirmation prompt.
+    config.summary.prompt = false
+
+    // Process the processed value (i.e., the summary).
+    return await getMovieSummary(value)
+}
+
+// ...
+```
 
 ### Error handling
 
