@@ -142,7 +142,7 @@ function getValueText(config, key) {
 
 
 // Perform custom user checks on the config element values.
-async function checkConfigElementValue(config, key) {
+async function checkConfigElementValue(tp, config, key) {
     // If the value has a custom user check.
     if (config[key].hasOwnProperty("check")) {
         // If the check is not a function.
@@ -157,7 +157,7 @@ async function checkConfigElementValue(config, key) {
         // Try to check the value.
         try {
             // Check the value.
-            checkResult = await Promise.resolve(config[key].check(config[key].value));
+            checkResult = await Promise.resolve(config[key].check(config[key].value, tp, config));
         } catch (error) {
             // Throw if the checking failed.
             throw new Error(`Failed checking '${key}' configuration value.`);
@@ -251,7 +251,7 @@ async function processConfigElementValue(tp, config, key) {
             modal.open();
 
             // Process and update the value.
-            config[key].value = await Promise.resolve(config[key].process(originalValue));
+            config[key].value = await Promise.resolve(config[key].process(originalValue, tp, config));
 
             // Close the user modal.
             modal.close();
@@ -365,7 +365,7 @@ async function elicitPromptAnswers(tp, config) {
             await processConfigElementValue(tp, config, key);
 
             // Check the value if the config has a custom user check.
-            await checkConfigElementValue(config, key);
+            await checkConfigElementValue(tp, config, key);
         }
 
         // Sort the references to respect reference dependency.
@@ -395,7 +395,7 @@ async function elicitPromptAnswers(tp, config) {
             await processConfigElementValue(tp, config, reference.key);
 
             // Check the value if the config has a custom user check.
-            await checkConfigElementValue(config, reference.key);
+            await checkConfigElementValue(tp, config, reference.key);
         }
     } catch (error) {
         // Set the default message to note creation cancelation.

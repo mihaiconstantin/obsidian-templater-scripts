@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.5.0
+
+### Added
+
+- Update the `check` and `process` function signature to `(value, tp, config) =>
+  { ... }`. The `value` argument is the value of the configuration element, the
+  `tp` argument is the `Templater` object, and the `config` argument is the
+  configuration object. This change allows the `check` and `process` functions
+  to access the `Templater` object and the configuration object. This is useful
+  for performing custom checks and processing that depend on the configuration
+  object (e.g., disabling the configuration prompt after a processing step).
+
 ## 2.4.0
 
 ### Changed
